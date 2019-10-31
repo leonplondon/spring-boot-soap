@@ -1,0 +1,42 @@
+<xs:schema
+  xmlns:tns="http://darkgod.pro/api/soap"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  elementFormDefault="qualified" targetNamespace="http://darkgod.pro/api/soap">
+
+  <xs:element name="friend">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="name" type="xs:string"/>
+        <xs:element name="age" type="xs:int"/>
+        <xs:element name="friends" type="xs:int"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="friendsRequest"/>
+
+  <xs:element name="friendRequest">
+    <xs:complexType>
+      <xs:all>
+        <xs:element name="name" type="xs:string"/>
+      </xs:all>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="friendsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="tns:friend"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="friendList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="tns:friend"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>
