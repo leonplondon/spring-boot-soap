@@ -1,19 +1,33 @@
 package pro.darkgod.soap.client;
 
 import java.util.UUID;
-import org.springframework.ws.client.core.support.WebServiceGatewaySupport;
-import org.springframework.ws.soap.client.core.SoapActionCallback;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 import pro.darkgod.api.wsdl.Friend;
+import pro.darkgod.api.wsdl.FriendList;
 import pro.darkgod.api.wsdl.FriendRequest;
+import pro.darkgod.api.wsdl.FriendsRequest;
+import pro.darkgod.soap.util.SoapReactiveHelper;
+import reactor.core.publisher.Mono;
 
-public class FriendClient extends WebServiceGatewaySupport {
+@Service
+public class FriendClient {
 
-    public Friend getFriendList() {
+    @Value("${soap.service}")
+    private String soapService;
+
+    @Autowired
+    private SoapReactiveHelper reactorWrapper;
+
+    public Mono<Friend> getFriendList() {
         FriendRequest friendRequest = new FriendRequest();
         friendRequest.setName(UUID.randomUUID().toString());
 
-        return (Friend) getWebServiceTemplate()
-            .marshalSendAndReceive("http://localhost:8080/api/soap", friendRequest,
-                new SoapActionCallback("http://darkgod.pro/api/soap/friendRequest"));
+        return reactorWrapper.callSoap(soapService, friendRequest);
+    }
+
+    public Mono<FriendList> getFriends() {
+        return reactorWrapper.callSoap(soapService, new FriendsRequest());
     }
 }
