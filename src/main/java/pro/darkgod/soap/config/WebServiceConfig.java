@@ -9,6 +9,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.oxm.jaxb.Jaxb2Marshaller;
+import org.springframework.ws.client.core.WebServiceTemplate;
 import org.springframework.ws.config.annotation.EnableWs;
 import org.springframework.ws.config.annotation.WsConfigurerAdapter;
 import org.springframework.ws.transport.http.MessageDispatcherServlet;
@@ -44,5 +46,17 @@ public class WebServiceConfig extends WsConfigurerAdapter {
         SimpleXsdSchema simpleXsdSchema = new SimpleXsdSchema();
         simpleXsdSchema.setXsd(serviceResource);
         return simpleXsdSchema;
+    }
+
+    @Bean
+    public WebServiceTemplate template(Jaxb2Marshaller marshaller) {
+        return new WebServiceTemplate(marshaller);
+    }
+
+    @Bean
+    public Jaxb2Marshaller marshaller() {
+        Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
+        marshaller.setContextPath("pro.darkgod.api.wsdl");
+        return marshaller;
     }
 }

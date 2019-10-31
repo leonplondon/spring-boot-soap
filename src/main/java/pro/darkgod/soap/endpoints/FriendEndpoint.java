@@ -24,7 +24,11 @@ public class FriendEndpoint {
     @ResponsePayload
     public FriendList getFriends() {
         FriendList friendList = new FriendList();
-        friendList.getFriend().add(new Friend());
+
+        for (int i = 0; i < 10; i++) {
+            friendList.getFriend().add(new Friend());
+        }
+
         return friendList;
     }
 

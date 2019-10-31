@@ -26,6 +26,9 @@ dependencies {
     implementation 'org.apache.ws.xmlschema:xmlschema-core:2.2.1'
     implementation(files(genJaxb.classesDir).builtBy(genJaxb))
 
+    // Reactive libraries;
+    implementation 'io.projectreactor:reactor-core:3.3.0.RELEASE'
+
     jaxb('org.glassfish.jaxb:jaxb-xjc:2.2.11')
 
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
